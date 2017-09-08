@@ -4,7 +4,7 @@
   "description": "A simple form validator for React",
   "main": "src/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/jest --coverage --verbose"
+    "test": "./node_modules/.bin/jest"
   },
   "repository": {
     "type": "git",
@@ -31,5 +31,17 @@
   "dependencies": {
     "prop-types": "^15.5.10",
     "shallowequal": "^1.0.2"
+  },
+  "jest": {
+    "verbose": true,
+    "collectCoverage": true,
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    }
   }
 }
