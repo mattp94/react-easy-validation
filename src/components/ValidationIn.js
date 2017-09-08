@@ -20,10 +20,10 @@ export default class ValidationIn extends Validation {
     }
 }
 
-ValidationIn.defaultProps = Object.assign({}, ValidationIn.defaultProps, {
+ValidationIn.defaultProps = Object.assign({
     value: 'value'
-})
+}, ValidationIn.defaultProps)
 
-ValidationIn.propTypes = Object.assign({}, ValidationIn.propTypes, {
+ValidationIn.propTypes = Object.assign({
     value: PropTypes.string.isRequired
-})
+}, ValidationIn.propTypes)
