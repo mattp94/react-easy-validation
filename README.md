@@ -1,8 +1,10 @@
 # react-easy-validation
 
 [![npm](https://img.shields.io/npm/v/react-easy-validation.svg)](https://www.npmjs.com/package/react-easy-validation)
-[![Build Status](https://travis-ci.org/mattp94/react-easy-validation.svg?branch=master)](https://travis-ci.org/mattp94/react-easy-validation)
-[![Coverage Status](https://coveralls.io/repos/github/mattp94/react-easy-validation/badge.svg?branch=master)](https://coveralls.io/github/mattp94/react-easy-validation?branch=master)
+[![build status](https://travis-ci.org/mattp94/react-easy-validation.svg?branch=master)](https://travis-ci.org/mattp94/react-easy-validation)
+[![coverage status](https://coveralls.io/repos/github/mattp94/react-easy-validation/badge.svg?branch=master)](https://coveralls.io/github/mattp94/react-easy-validation?branch=master)
+[![dependencies](https://img.shields.io/david/mattp94/react-easy-validation.svg)](https://david-dm.org/mattp94/react-easy-validation)
+[![devDependencies](https://img.shields.io/david/dev/mattp94/react-easy-validation.svg)](https://david-dm.org/mattp94/react-easy-validation/?type=dev)
 
 > This library gives an **easy** way to **validate forms** in [React](https://facebook.github.io/react) by using a **wrapper** on your components.
 
@@ -44,8 +46,7 @@ Now, consider the following component `Input` which can display an error from it
 ```js
 const Input = ({ err, val, onChange }) => (
     <div>
-        <input onChange={onChange} value={val} />
-        {err}
+        <input onChange={onChange} value={val} /> {err}
     </div>
 )
 ```
