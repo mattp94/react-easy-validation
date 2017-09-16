@@ -1,6 +1,0 @@
-.babelrc
-.travis.yml
-coverage/
-src/
-test/
-webpack.config.js
