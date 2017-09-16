@@ -9,9 +9,9 @@
     "validator",
     "form"
   ],
-  "main": "./dist/index.js",
+  "main": "dist/index.js",
   "files": [
-    "./dist"
+    "dist"
   ],
   "scripts": {
     "test": "./node_modules/.bin/jest",
