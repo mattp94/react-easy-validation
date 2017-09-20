@@ -23,7 +23,7 @@ export default class Validation extends Component {
         if (nextValue !== value)
             this.validate(false, nextProps)
         else if (!shallowequal(children.props, this.props.children.props))
-            this.renderChild(children, error, this.state.error)
+            this.renderChild(children, error, this.hint)
     }
 
     componentWillUnmount() {
@@ -35,7 +35,7 @@ export default class Validation extends Component {
 
         for (const { rule, hint } of validators)
             if (!rule(value)) {
-                this.renderChild(children, error, mute ? this.state.error : hint)
+                this.renderChild(children, error, mute ? this.hint : hint)
                 return false
             }
 
@@ -47,9 +47,10 @@ export default class Validation extends Component {
         this.setState({
             child: hint === undefined ? child : React.cloneElement(child, {
                 [error]: hint
-            }),
-            error: hint
+            })
         })
+
+        this.hint = hint
     }
 
     render() {
