@@ -18,7 +18,9 @@
 
 ## Demo
 
-Check out a complete [example](https://codesandbox.io/embed/43o0m77nw4) with **Material-UI**.
+Check out a [complete example](https://codesandbox.io/embed/43o0m77nw4) with **Material-UI**.
+
+> **Note:** Due to hot reloading in **CodeSandbox**, make sure to manually refresh page before testing again.
 
 ## Installation
 
@@ -143,7 +145,7 @@ const result = validate(group[, mute])
 
 ## Example
 
-Here is a basic [example](https://codesandbox.io/embed/oq176zv629) with **ValidationIn**. Be aware that it would have been similar with **ValidationOut**:
+Here is a [basic example](https://codesandbox.io/embed/oq176zv629) with **ValidationIn**. Be aware that it would have been similar with **ValidationOut**:
 
 ```js
 import React, { Component } from 'react'
