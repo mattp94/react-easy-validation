@@ -45,15 +45,13 @@ describe('<ValidationOut />', () => {
             />
         )
 
-        const input = wrapper.find(Input)
-
-        expect(input.prop('errorText')).toBeUndefined()
+        expect(wrapper.find(Input).prop('errorText')).toBeUndefined()
 
         wrapper.setProps({
             value: ''
         })
 
-        expect(input.prop('errorText')).toBeUndefined()
+        expect(wrapper.find(Input).prop('errorText')).toBeUndefined()
     })
 
     it('should pass props to child as well as an error prop', () => {
@@ -68,7 +66,7 @@ describe('<ValidationOut />', () => {
             />
         )
 
-        const input = wrapper.find(Input)
+        let input = wrapper.find(Input)
 
         expect(input.prop('disabled')).toBeUndefined()
         expect(input.prop('errorText')).toBeUndefined()
@@ -78,12 +76,16 @@ describe('<ValidationOut />', () => {
             value: ''
         })
 
+        input = wrapper.find(Input)
+
         expect(input.prop('disabled')).toBe(false)
         expect(input.prop('errorText')).toBe('Required')
 
         wrapper.setProps({
             disabled: false
         })
+
+        input = wrapper.find(Input)
 
         expect(input.prop('disabled')).toBe(false)
         expect(input.prop('errorText')).toBe('Required')
@@ -92,12 +94,16 @@ describe('<ValidationOut />', () => {
             disabled: true
         })
 
+        input = wrapper.find(Input)
+
         expect(input.prop('disabled')).toBe(true)
         expect(input.prop('errorText')).toBe('Required')
 
         wrapper.setProps({
             value: 'Berlin'
         })
+
+        input = wrapper.find(Input)
 
         expect(input.prop('disabled')).toBe(true)
         expect(input.prop('errorText')).toBeUndefined()
@@ -122,33 +128,31 @@ describe('<ValidationOut />', () => {
             />
         )
 
-        const input = wrapper.find(Input)
-
-        expect(input.prop('err')).toBeUndefined()
+        expect(wrapper.find(Input).prop('err')).toBeUndefined()
 
         wrapper.setProps({
             value: ''
         })
 
-        expect(input.prop('err')).toBe('Required')
+        expect(wrapper.find(Input).prop('err')).toBe('Required')
 
         wrapper.setProps({
             value: 'Singapore'
         })
 
-        expect(input.prop('err')).toBe('Too long')
+        expect(wrapper.find(Input).prop('err')).toBe('Too long')
 
         wrapper.setProps({
             value: 'Rome'
         })
 
-        expect(input.prop('err')).toBe('Only numbers')
+        expect(wrapper.find(Input).prop('err')).toBe('Only numbers')
 
         wrapper.setProps({
             value: '1234'
         })
 
-        expect(input.prop('err')).toBeUndefined()
+        expect(wrapper.find(Input).prop('err')).toBeUndefined()
     })
 
     it('should update validators and error props on the fly', () => {
@@ -163,15 +167,13 @@ describe('<ValidationOut />', () => {
             />
         )
 
-        const input = wrapper.find(Input)
-
-        expect(input.prop('errorText')).toBeUndefined()
+        expect(wrapper.find(Input).prop('errorText')).toBeUndefined()
 
         wrapper.setProps({
             value: ''
         })
 
-        expect(input.prop('errorText')).toBe('Required')
+        expect(wrapper.find(Input).prop('errorText')).toBe('Required')
 
         wrapper.setProps({
             error: 'err',
@@ -182,6 +184,6 @@ describe('<ValidationOut />', () => {
             }]
         })
 
-        expect(input.prop('err')).toBe('Only numbers')
+        expect(wrapper.find(Input).prop('err')).toBe('Only numbers')
     })
 })
