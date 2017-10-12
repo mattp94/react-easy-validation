@@ -35,6 +35,10 @@ const CoreWrapper = props => (
 )
 
 describe('core', () => {
+    beforeEach(() => {
+        elements.clear()
+    })
+
     it('should validate nothing in group as there is no element', () => {
         expect(elements.size).toBe(0)
         expect(validate('group')).toBe(true)
