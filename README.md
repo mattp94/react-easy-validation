@@ -1,10 +1,11 @@
 # react-easy-validation
 
-[![npm](https://img.shields.io/npm/v/react-easy-validation.svg)](https://www.npmjs.com/package/react-easy-validation)
+[![npm version](https://badge.fury.io/js/react-easy-validation.svg)](https://www.npmjs.com/package/react-easy-validation)
 [![build status](https://travis-ci.org/mattp94/react-easy-validation.svg?branch=master)](https://travis-ci.org/mattp94/react-easy-validation)
 [![coverage status](https://coveralls.io/repos/github/mattp94/react-easy-validation/badge.svg?branch=master)](https://coveralls.io/github/mattp94/react-easy-validation?branch=master)
-[![dependencies](https://david-dm.org/mattp94/react-easy-validation/status.svg)](https://david-dm.org/mattp94/react-easy-validation)
-[![devDependencies](https://david-dm.org/mattp94/react-easy-validation/dev-status.svg)](https://david-dm.org/mattp94/react-easy-validation?type=dev)
+[![dependencies status](https://david-dm.org/mattp94/react-easy-validation/status.svg)](https://david-dm.org/mattp94/react-easy-validation)
+[![peerDependencies status](https://david-dm.org/mattp94/react-easy-validation/peer-status.svg)](https://david-dm.org/mattp94/react-easy-validation?type=peer)
+[![devDependencies status](https://david-dm.org/mattp94/react-easy-validation/dev-status.svg)](https://david-dm.org/mattp94/react-easy-validation?type=dev)
 
 > This library gives an **easy** way to **validate forms** in [React](https://facebook.github.io/react) by using a **wrapper** on your components.
 
@@ -145,7 +146,7 @@ const result = validate(group[, mute])
 
 ## Example
 
-Here is a [basic example](https://codesandbox.io/embed/oq176zv629) with **ValidationIn**. Be aware that it would have been similar with **ValidationOut**:
+Here is a [basic example](https://codesandbox.io/embed/oq176zv629) with `<ValidationIn />`:
 
 ```js
 import React, { Component } from 'react'
@@ -207,3 +208,5 @@ class Example extends Component {
     }
 }
 ```
+
+> **Note:** Be aware that it would have been similar with `<ValidationOut />`.
