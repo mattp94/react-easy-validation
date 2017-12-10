@@ -3,19 +3,19 @@
 [![npm version](https://badge.fury.io/js/react-easy-validation.svg)](https://www.npmjs.com/package/react-easy-validation)
 [![build status](https://travis-ci.org/mattp94/react-easy-validation.svg?branch=master)](https://travis-ci.org/mattp94/react-easy-validation)
 [![coverage status](https://coveralls.io/repos/github/mattp94/react-easy-validation/badge.svg?branch=master)](https://coveralls.io/github/mattp94/react-easy-validation?branch=master)
-[![dependencies status](https://david-dm.org/mattp94/react-easy-validation/status.svg)](https://david-dm.org/mattp94/react-easy-validation)
 [![peerDependencies status](https://david-dm.org/mattp94/react-easy-validation/peer-status.svg)](https://david-dm.org/mattp94/react-easy-validation?type=peer)
+[![dependencies status](https://david-dm.org/mattp94/react-easy-validation/status.svg)](https://david-dm.org/mattp94/react-easy-validation)
 [![devDependencies status](https://david-dm.org/mattp94/react-easy-validation/dev-status.svg)](https://david-dm.org/mattp94/react-easy-validation?type=dev)
 
 > This library gives an **easy** way to **validate forms** in [React](https://facebook.github.io/react) by using a **wrapper** on your components.
 
 ## Features
 
-- Simple usage by **wrapping** components you want to validate
-- Supports components which **handle** an **error prop** whatever prop name
-- Supports validation of a **set** of **components** by associating **groups** with these components
-- Can **observe** a **value prop** of your component whatever prop name as well as a value **outside** it
-- May be used with **libraries** like [Material-UI](http://www.material-ui.com) or [React Toolbox](http://react-toolbox.com)
+- Simple usage by **wrapping** components you want to validate.
+- Supports components which **handle** an **error prop** whatever prop name.
+- Supports validation of a **set** of **components** by associating **groups** with these components.
+- Can **observe** a **value prop** of your component whatever prop name as well as a value **outside** it.
+- May be used with **libraries** like [Material-UI](http://www.material-ui.com) or [React Toolbox](http://react-toolbox.com).
 
 ## Demo
 
@@ -84,7 +84,7 @@ All of these can be changed on the fly:
 
 | Name | Type | Default | Required | Description |
 | ---- | ---- | ------- | :------: | ----------- |
-| `children` | `element` | | ✓ | Component you want to validate |
+| `children` | `element` | | ✓ | Component you want to validate. |
 | `error` | `string` | `errorText` | | Name of the component's prop which receives errors. |
 | `groups` | `array` | | ✓ | Groups you want to associate with your component. Any type is allowed because a group is used like a key. |
 | `validators` | `array` | | ✓ | Validators whose order is important. Each validator is an `object` like `{ rule: func, hint: any }`. Here, `rule` takes a `value` as parameter and returns a result. If it's falsy, then `hint` is passed to the component. |
@@ -142,7 +142,7 @@ const result = validate(group[, mute])
 #### Return value
 
 + **Type:** `boolean`
-+ **Description:** Result of the validation
++ **Description:** Result of the validation.
 
 ## Example
 
@@ -158,17 +158,12 @@ class Example extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-            value: ''
-        }
-
+        this.state = { value: '' }
         this.handleChange = this.handleChange.bind(this)
     }
 
     handleChange({ target: { value } }) {
-        this.setState({
-            value
-        })
+        this.setState({ value })
     }
 
     handleSubmit(event) {
@@ -210,3 +205,10 @@ class Example extends Component {
 ```
 
 > **Note:** Be aware that it would have been similar with `<ValidationOut />`.
+
+## Unit testing
+
+You can easily test your form validation with [Enzyme](http://airbnb.io/enzyme). Just make sure to follow these two points:
+
+- It requires a full rendering of your components by using `mount`.
+- Because this library is built with a singleton pattern, don't forget to `unmount` your wrapper after using it.
