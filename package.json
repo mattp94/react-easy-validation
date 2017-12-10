@@ -15,8 +15,8 @@
   ],
   "scripts": {
     "test": "./node_modules/.bin/jest",
-    "start": "cross-env NODE_ENV=development ./node_modules/.bin/webpack --watch",
-    "build": "cross-env NODE_ENV=production ./node_modules/.bin/webpack",
+    "start": "./node_modules/.bin/cross-env NODE_ENV=development ./node_modules/.bin/webpack --watch",
+    "build": "./node_modules/.bin/cross-env NODE_ENV=production ./node_modules/.bin/webpack",
     "prepublishOnly": "npm test && npm run build"
   },
   "repository": {
@@ -33,15 +33,16 @@
     "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.17",
     "coveralls": "^3.0.0",
-    "cross-env": "^5.0.5",
-    "enzyme": "^3.1.0",
-    "enzyme-adapter-react-16": "^1.0.1",
+    "cross-env": "^5.1.1",
+    "enzyme": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.1.0",
     "jest": "^21.2.1",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "react-test-renderer": "^16.0.0",
-    "webpack": "^3.7.1"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-test-renderer": "^16.2.0",
+    "webpack": "^3.10.0"
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0 || ^16.0.0"
