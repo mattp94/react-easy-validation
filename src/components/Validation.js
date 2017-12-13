@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import shallowequal from 'shallowequal'
+import { cloneElement, Component } from 'react'
 
 import { elements } from '../core'
 
@@ -45,7 +45,7 @@ export default class Validation extends Component {
 
     renderChild(child, error, hint) {
         this.setState({
-            child: hint === undefined ? child : React.cloneElement(child, {
+            child: hint === undefined ? child : cloneElement(child, {
                 [error]: hint
             })
         })

@@ -150,7 +150,7 @@ Here is a [basic example](https://codesandbox.io/embed/oq176zv629) with `<Valida
 
 ```js
 import React, { Component } from 'react'
-import { ValidationIn, validate } from 'react-easy-validation'
+import { validate, ValidationIn } from 'react-easy-validation'
 
 import Input from './Input'
 
@@ -158,12 +158,17 @@ class Example extends Component {
     constructor(props) {
         super(props)
 
-        this.state = { value: '' }
+        this.state = {
+            value: ''
+        }
+
         this.handleChange = this.handleChange.bind(this)
     }
 
     handleChange({ target: { value } }) {
-        this.setState({ value })
+        this.setState({
+            value
+        })
     }
 
     handleSubmit(event) {
