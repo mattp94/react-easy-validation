@@ -161,13 +161,13 @@ describe('<ValidationIn />', () => {
         expect(select.prop('helperText')).toBeUndefined()
     })
 
-    it('should test several validators with err / hlpr as error / helper props', () => {
+    it('should test several validators with err / msg as error / helper props', () => {
         const wrapper = mount(
             <ValidationInWrapper
                 childValue="Taipei"
                 error="err"
                 groups={[]}
-                helper="hlpr"
+                helper="msg"
                 validators={[{
                     rule: value => value.length > 8,
                     hint: 'Too short'
@@ -182,7 +182,7 @@ describe('<ValidationIn />', () => {
         let select = wrapper.find(Select)
 
         expect(select.prop('err')).toBeUndefined()
-        expect(select.prop('hlpr')).toBeUndefined()
+        expect(select.prop('msg')).toBeUndefined()
 
         wrapper.setProps({
             childValue: 'Helsinki'
@@ -191,7 +191,7 @@ describe('<ValidationIn />', () => {
         select = wrapper.find(Select)
 
         expect(select.prop('err')).toBe(true)
-        expect(select.prop('hlpr')).toBe('Too short')
+        expect(select.prop('msg')).toBe('Too short')
 
         wrapper.setProps({
             childValue: 'Stockholm'
@@ -200,7 +200,7 @@ describe('<ValidationIn />', () => {
         select = wrapper.find(Select)
 
         expect(select.prop('err')).toBe(true)
-        expect(select.prop('hlpr')).toBe('Only uppercase')
+        expect(select.prop('msg')).toBe('Only uppercase')
 
         wrapper.setProps({
             childValue: 'STOCKHOLM'
@@ -209,7 +209,7 @@ describe('<ValidationIn />', () => {
         select = wrapper.find(Select)
 
         expect(select.prop('err')).toBeUndefined()
-        expect(select.prop('hlpr')).toBeUndefined()
+        expect(select.prop('msg')).toBeUndefined()
     })
 
     it('should update validators, error and helper props on the fly', () => {
@@ -242,7 +242,7 @@ describe('<ValidationIn />', () => {
         wrapper.setProps({
             childValue: 'Riga',
             error: 'err',
-            helper: 'hlpr',
+            helper: 'msg',
             validators: [{
                 rule: value => value.length > 4,
                 hint: 'Too short'
@@ -252,6 +252,6 @@ describe('<ValidationIn />', () => {
         select = wrapper.find(Select)
 
         expect(select.prop('err')).toBe(true)
-        expect(select.prop('hlpr')).toBe('Too short')
+        expect(select.prop('msg')).toBe('Too short')
     })
 })

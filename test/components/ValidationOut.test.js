@@ -123,12 +123,12 @@ describe('<ValidationOut />', () => {
         expect(input.prop('helperText')).toBeUndefined()
     })
 
-    it('should test several validators with err / hlpr as error / helper props', () => {
+    it('should test several validators with err / msg as error / helper props', () => {
         const wrapper = mount(
             <ValidationOutWrapper
                 error="err"
                 groups={[]}
-                helper="hlpr"
+                helper="msg"
                 validators={[{
                     rule: value => value,
                     hint: 'Required'
@@ -146,7 +146,7 @@ describe('<ValidationOut />', () => {
         let input = wrapper.find(Input)
 
         expect(input.prop('err')).toBeUndefined()
-        expect(input.prop('hlpr')).toBeUndefined()
+        expect(input.prop('msg')).toBeUndefined()
 
         wrapper.setProps({
             value: ''
@@ -155,7 +155,7 @@ describe('<ValidationOut />', () => {
         input = wrapper.find(Input)
 
         expect(input.prop('err')).toBe(true)
-        expect(input.prop('hlpr')).toBe('Required')
+        expect(input.prop('msg')).toBe('Required')
 
         wrapper.setProps({
             value: 'Singapore'
@@ -164,7 +164,7 @@ describe('<ValidationOut />', () => {
         input = wrapper.find(Input)
 
         expect(input.prop('err')).toBe(true)
-        expect(input.prop('hlpr')).toBe('Too long')
+        expect(input.prop('msg')).toBe('Too long')
 
         wrapper.setProps({
             value: 'Rome'
@@ -173,7 +173,7 @@ describe('<ValidationOut />', () => {
         input = wrapper.find(Input)
 
         expect(input.prop('err')).toBe(true)
-        expect(input.prop('hlpr')).toBe('Only numbers')
+        expect(input.prop('msg')).toBe('Only numbers')
 
         wrapper.setProps({
             value: '1234'
@@ -182,7 +182,7 @@ describe('<ValidationOut />', () => {
         input = wrapper.find(Input)
 
         expect(input.prop('err')).toBeUndefined()
-        expect(input.prop('hlpr')).toBeUndefined()
+        expect(input.prop('msg')).toBeUndefined()
     })
 
     it('should update validators, error and helper props on the fly', () => {
@@ -213,7 +213,7 @@ describe('<ValidationOut />', () => {
 
         wrapper.setProps({
             error: 'err',
-            helper: 'hlpr',
+            helper: 'msg',
             value: 'Kiev',
             validators: [{
                 rule: value => /^\d+$/.test(value),
@@ -224,6 +224,6 @@ describe('<ValidationOut />', () => {
         input = wrapper.find(Input)
 
         expect(input.prop('err')).toBe(true)
-        expect(input.prop('hlpr')).toBe('Only numbers')
+        expect(input.prop('msg')).toBe('Only numbers')
     })
 })
