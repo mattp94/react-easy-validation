@@ -15,13 +15,11 @@
 - Supports components which **handle** an **error prop** whatever prop name.
 - Supports validation of a **set** of **components** by associating **groups** with these components.
 - Can **observe** a **value prop** of your component whatever prop name as well as a value **outside** it.
-- May be used with **libraries** like [Material-UI](http://www.material-ui.com) or [React Toolbox](http://react-toolbox.com).
+- May be used with **libraries** like [Material-UI](http://www.material-ui.com) or [React Toolbox](http://react-toolbox.io).
 
 ## Demo
 
 Check out a [complete example](https://codesandbox.io/embed/43o0m77nw4) with **Material-UI**.
-
-> **Note:** Due to hot reloading in **CodeSandbox**, make sure to manually refresh page before testing again.
 
 ## Installation
 
@@ -175,9 +173,7 @@ class Example extends Component {
         event.preventDefault()
 
         if (validate('form'))
-            alert('Your form is valid!')
-        else
-            alert('Your form is invalid...')
+            alert('Form is valid')
     }
 
     render() {
