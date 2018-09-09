@@ -1,7 +1,11 @@
 # react-easy-validation
 
-[![build status](https://travis-ci.org/mattp94/react-easy-validation.svg?branch=v2)](https://travis-ci.org/mattp94/react-easy-validation)
-[![coverage status](https://coveralls.io/repos/github/mattp94/react-easy-validation/badge.svg?branch=v2)](https://coveralls.io/github/mattp94/react-easy-validation?branch=v2)
+[![npm version](https://badge.fury.io/js/react-easy-validation.svg)](https://www.npmjs.com/package/react-easy-validation)
+[![build status](https://travis-ci.org/mattp94/react-easy-validation.svg?branch=master)](https://travis-ci.org/mattp94/react-easy-validation)
+[![coverage status](https://coveralls.io/repos/github/mattp94/react-easy-validation/badge.svg?branch=master)](https://coveralls.io/github/mattp94/react-easy-validation?branch=master)
+[![peerDependencies status](https://david-dm.org/mattp94/react-easy-validation/peer-status.svg)](https://david-dm.org/mattp94/react-easy-validation?type=peer)
+[![dependencies status](https://david-dm.org/mattp94/react-easy-validation/status.svg)](https://david-dm.org/mattp94/react-easy-validation)
+[![devDependencies status](https://david-dm.org/mattp94/react-easy-validation/dev-status.svg)](https://david-dm.org/mattp94/react-easy-validation?type=dev)
 
 > This library gives an **easy** way to **validate forms** in [React](https://facebook.github.io/react) by using a **wrapper** on your components.
 
@@ -11,18 +15,18 @@
 - Supports components which **manage errors** from props.
 - Supports validation of a **set** of **components** by associating **groups** with these components.
 - Can **observe** a **value prop** of your component as well as a value **outside** it.
-- **Compatible** with [Material-UI v1](https://material-ui-next.com).
+- May be used with **libraries** like [Material-UI](http://www.material-ui.com) or [React Toolbox](http://react-toolbox.io).
 
 ## Demo
 
-Check out a [complete example](https://codesandbox.io/embed/2jx75m2qnr) with **Material-UI v1**.
+Check out a [complete example](https://codesandbox.io/embed/2jx75m2qnr) with **Material-UI**.
 
 ## Installation
 
 It requires **React v0.14** or later.
 
 ```sh
-npm install react-easy-validation@next --save
+npm install react-easy-validation --save
 ```
 
 This assumes that you’re using [npm](https://www.npmjs.com) package manager with a module bundler.
@@ -41,10 +45,10 @@ On the other side, a method `validate` allows you to validate a set of component
 Now, consider the following component `Input`:
 
 ```js
-const Input = ({ err, msg, val, onChange }) => (
+const Input = ({ err, msg, val, ...rest }) => (
     <div>
-        <input onChange={onChange} value={val} />
-        {err && <div>{msg}</div>}
+        <input {...rest} value={val} />
+        {err && <span>{msg}</span>}
     </div>
 )
 ```
@@ -156,26 +160,18 @@ class Example extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-            value: ''
-        }
-
+        this.state = { value: '' }
         this.handleChange = this.handleChange.bind(this)
     }
 
     handleChange({ target: { value } }) {
-        this.setState({
-            value
-        })
+        this.setState({ value })
     }
 
     handleSubmit(event) {
         event.preventDefault()
 
-        if (validate('form'))
-            alert('Your form is valid!')
-        else
-            alert('Your form is invalid...')
+        validate('form') && alert('Success')
     }
 
     render() {
@@ -198,10 +194,7 @@ class Example extends Component {
                         val={this.state.value}
                     />
                 </ValidationIn>
-
-                <button type="submit">
-                    Validate
-                </button>
+                <input type="submit" />
             </form>
         )
     }
