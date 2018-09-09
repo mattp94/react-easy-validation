@@ -21,7 +21,10 @@ describe('<ValidationOut />', () => {
             />
         )
 
-        expect(wrapper.find(ValidationOut).prop('error')).toBe('errorText')
+        const validationOut = wrapper.find(ValidationOut)
+
+        expect(validationOut.prop('error')).toBe('error')
+        expect(validationOut.prop('helper')).toBe('helperText')
     })
 
     it('should render an input', () => {
@@ -45,16 +48,22 @@ describe('<ValidationOut />', () => {
             />
         )
 
-        expect(wrapper.find(Input).prop('errorText')).toBeUndefined()
+        let input = wrapper.find(Input)
+
+        expect(input.prop('error')).toBeUndefined()
+        expect(input.prop('helperText')).toBeUndefined()
 
         wrapper.setProps({
             value: ''
         })
 
-        expect(wrapper.find(Input).prop('errorText')).toBeUndefined()
+        input = wrapper.find(Input)
+
+        expect(input.prop('error')).toBeUndefined()
+        expect(input.prop('helperText')).toBeUndefined()
     })
 
-    it('should pass props to child as well as an error prop', () => {
+    it('should pass props to child as well as error / helperText props', () => {
         const wrapper = mount(
             <ValidationOutWrapper
                 groups={[]}
@@ -69,7 +78,8 @@ describe('<ValidationOut />', () => {
         let input = wrapper.find(Input)
 
         expect(input.prop('disabled')).toBeUndefined()
-        expect(input.prop('errorText')).toBeUndefined()
+        expect(input.prop('error')).toBeUndefined()
+        expect(input.prop('helperText')).toBeUndefined()
 
         wrapper.setProps({
             disabled: false,
@@ -79,7 +89,8 @@ describe('<ValidationOut />', () => {
         input = wrapper.find(Input)
 
         expect(input.prop('disabled')).toBe(false)
-        expect(input.prop('errorText')).toBe('Required')
+        expect(input.prop('error')).toBe(true)
+        expect(input.prop('helperText')).toBe('Required')
 
         wrapper.setProps({
             disabled: false
@@ -88,7 +99,8 @@ describe('<ValidationOut />', () => {
         input = wrapper.find(Input)
 
         expect(input.prop('disabled')).toBe(false)
-        expect(input.prop('errorText')).toBe('Required')
+        expect(input.prop('error')).toBe(true)
+        expect(input.prop('helperText')).toBe('Required')
 
         wrapper.setProps({
             disabled: true
@@ -97,7 +109,8 @@ describe('<ValidationOut />', () => {
         input = wrapper.find(Input)
 
         expect(input.prop('disabled')).toBe(true)
-        expect(input.prop('errorText')).toBe('Required')
+        expect(input.prop('error')).toBe(true)
+        expect(input.prop('helperText')).toBe('Required')
 
         wrapper.setProps({
             value: 'Berlin'
@@ -106,14 +119,16 @@ describe('<ValidationOut />', () => {
         input = wrapper.find(Input)
 
         expect(input.prop('disabled')).toBe(true)
-        expect(input.prop('errorText')).toBeUndefined()
+        expect(input.prop('error')).toBeUndefined()
+        expect(input.prop('helperText')).toBeUndefined()
     })
 
-    it('should test several validators with err as error prop', () => {
+    it('should test several validators with err / msg as error / helper props', () => {
         const wrapper = mount(
             <ValidationOutWrapper
                 error="err"
                 groups={[]}
+                helper="msg"
                 validators={[{
                     rule: value => value,
                     hint: 'Required'
@@ -128,34 +143,49 @@ describe('<ValidationOut />', () => {
             />
         )
 
-        expect(wrapper.find(Input).prop('err')).toBeUndefined()
+        let input = wrapper.find(Input)
+
+        expect(input.prop('err')).toBeUndefined()
+        expect(input.prop('msg')).toBeUndefined()
 
         wrapper.setProps({
             value: ''
         })
 
-        expect(wrapper.find(Input).prop('err')).toBe('Required')
+        input = wrapper.find(Input)
+
+        expect(input.prop('err')).toBe(true)
+        expect(input.prop('msg')).toBe('Required')
 
         wrapper.setProps({
             value: 'Singapore'
         })
 
-        expect(wrapper.find(Input).prop('err')).toBe('Too long')
+        input = wrapper.find(Input)
+
+        expect(input.prop('err')).toBe(true)
+        expect(input.prop('msg')).toBe('Too long')
 
         wrapper.setProps({
             value: 'Rome'
         })
 
-        expect(wrapper.find(Input).prop('err')).toBe('Only numbers')
+        input = wrapper.find(Input)
+
+        expect(input.prop('err')).toBe(true)
+        expect(input.prop('msg')).toBe('Only numbers')
 
         wrapper.setProps({
             value: '1234'
         })
 
-        expect(wrapper.find(Input).prop('err')).toBeUndefined()
+        input = wrapper.find(Input)
+
+        expect(input.prop('err')).toBeUndefined()
+        expect(input.prop('msg')).toBeUndefined()
     })
 
-    it('should update validators and error props on the fly', () => {
+    it('should update validators, error and helper props on the fly', () => {
         const wrapper = mount(
             <ValidationOutWrapper
                 groups={[]}
@@ -167,16 +197,23 @@ describe('<ValidationOut />', () => {
             />
         )
 
-        expect(wrapper.find(Input).prop('errorText')).toBeUndefined()
+        let input = wrapper.find(Input)
+
+        expect(input.prop('error')).toBeUndefined()
+        expect(input.prop('helperText')).toBeUndefined()
 
         wrapper.setProps({
             value: ''
         })
 
-        expect(wrapper.find(Input).prop('errorText')).toBe('Required')
+        input = wrapper.find(Input)
+
+        expect(input.prop('error')).toBe(true)
+        expect(input.prop('helperText')).toBe('Required')
 
         wrapper.setProps({
             error: 'err',
+            helper: 'msg',
             value: 'Kiev',
             validators: [{
                 rule: value => /^\d+$/.test(value),
@@ -184,6 +221,9 @@ describe('<ValidationOut />', () => {
             }]
         })
 
-        expect(wrapper.find(Input).prop('err')).toBe('Only numbers')
+        input = wrapper.find(Input)
+
+        expect(input.prop('err')).toBe(true)
+        expect(input.prop('msg')).toBe('Only numbers')
     })
 })

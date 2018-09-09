@@ -101,10 +101,22 @@ describe('core', () => {
             />
         )
 
-        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBeUndefined()
+        let textarea0 = wrapper.find(Textarea).at(0)
+        let textarea1 = wrapper.find(Textarea).at(1)
+        let textarea2 = wrapper.find(Textarea).at(2)
+        let textarea3 = wrapper.find(Textarea).at(3)
+
+        expect(textarea0.prop('error')).toBeUndefined()
+        expect(textarea0.prop('helperText')).toBeUndefined()
+
+        expect(textarea1.prop('error')).toBeUndefined()
+        expect(textarea1.prop('helperText')).toBeUndefined()
+
+        expect(textarea2.prop('error')).toBeUndefined()
+        expect(textarea2.prop('helperText')).toBeUndefined()
+
+        expect(textarea3.prop('error')).toBeUndefined()
+        expect(textarea3.prop('helperText')).toBeUndefined()
 
         expect(validate('groupA')).toBe(false)
         expect(validate('groupB')).toBe(false)
@@ -112,16 +124,31 @@ describe('core', () => {
 
         wrapper.update()
 
-        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBe('Only numbers')
-        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBe('Required')
-        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBe('Too short')
+        textarea0 = wrapper.find(Textarea).at(0)
+        textarea1 = wrapper.find(Textarea).at(1)
+        textarea2 = wrapper.find(Textarea).at(2)
+        textarea3 = wrapper.find(Textarea).at(3)
+
+        expect(textarea0.prop('error')).toBe(true)
+        expect(textarea0.prop('helperText')).toBe('Only numbers')
+
+        expect(textarea1.prop('error')).toBe(true)
+        expect(textarea1.prop('helperText')).toBe('Required')
+
+        expect(textarea2.prop('error')).toBeUndefined()
+        expect(textarea2.prop('helperText')).toBeUndefined()
+
+        expect(textarea3.prop('error')).toBe(true)
+        expect(textarea3.prop('helperText')).toBe('Too short')
 
         wrapper.setProps({
             value0: '9876'
         })
 
-        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBeUndefined()
+        textarea0 = wrapper.find(Textarea).at(0)
+
+        expect(textarea0.prop('error')).toBeUndefined()
+        expect(textarea0.prop('helperText')).toBeUndefined()
 
         expect(validate('groupA')).toBe(false)
         expect(validate('groupB')).toBe(false)
@@ -129,16 +156,31 @@ describe('core', () => {
 
         wrapper.update()
 
-        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBe('Required')
-        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBe('Too short')
+        textarea0 = wrapper.find(Textarea).at(0)
+        textarea1 = wrapper.find(Textarea).at(1)
+        textarea2 = wrapper.find(Textarea).at(2)
+        textarea3 = wrapper.find(Textarea).at(3)
+
+        expect(textarea0.prop('error')).toBeUndefined()
+        expect(textarea0.prop('helperText')).toBeUndefined()
+
+        expect(textarea1.prop('error')).toBe(true)
+        expect(textarea1.prop('helperText')).toBe('Required')
+
+        expect(textarea2.prop('error')).toBeUndefined()
+        expect(textarea2.prop('helperText')).toBeUndefined()
+
+        expect(textarea3.prop('error')).toBe(true)
+        expect(textarea3.prop('helperText')).toBe('Too short')
 
         wrapper.setProps({
             childValue1: 'Oslo'
         })
 
-        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBeUndefined()
+        textarea1 = wrapper.find(Textarea).at(1)
+
+        expect(textarea1.prop('error')).toBeUndefined()
+        expect(textarea1.prop('helperText')).toBeUndefined()
 
         expect(validate('groupA')).toBe(true)
         expect(validate('groupB')).toBe(false)
@@ -146,16 +188,31 @@ describe('core', () => {
 
         wrapper.update()
 
-        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBe('Too short')
+        textarea0 = wrapper.find(Textarea).at(0)
+        textarea1 = wrapper.find(Textarea).at(1)
+        textarea2 = wrapper.find(Textarea).at(2)
+        textarea3 = wrapper.find(Textarea).at(3)
+
+        expect(textarea0.prop('error')).toBeUndefined()
+        expect(textarea0.prop('helperText')).toBeUndefined()
+
+        expect(textarea1.prop('error')).toBeUndefined()
+        expect(textarea1.prop('helperText')).toBeUndefined()
+
+        expect(textarea2.prop('error')).toBeUndefined()
+        expect(textarea2.prop('helperText')).toBeUndefined()
+
+        expect(textarea3.prop('error')).toBe(true)
+        expect(textarea3.prop('helperText')).toBe('Too short')
 
         wrapper.setProps({
             value2: ''
         })
 
-        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBeUndefined()
+        textarea2 = wrapper.find(Textarea).at(2)
+
+        expect(textarea2.prop('error')).toBeUndefined()
+        expect(textarea2.prop('helperText')).toBeUndefined()
 
         expect(validate('groupA')).toBe(true)
         expect(validate('groupB')).toBe(false)
@@ -163,16 +220,31 @@ describe('core', () => {
 
         wrapper.update()
 
-        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBe('Too short')
+        textarea0 = wrapper.find(Textarea).at(0)
+        textarea1 = wrapper.find(Textarea).at(1)
+        textarea2 = wrapper.find(Textarea).at(2)
+        textarea3 = wrapper.find(Textarea).at(3)
+
+        expect(textarea0.prop('error')).toBeUndefined()
+        expect(textarea0.prop('helperText')).toBeUndefined()
+
+        expect(textarea1.prop('error')).toBeUndefined()
+        expect(textarea1.prop('helperText')).toBeUndefined()
+
+        expect(textarea2.prop('error')).toBeUndefined()
+        expect(textarea2.prop('helperText')).toBeUndefined()
+
+        expect(textarea3.prop('error')).toBe(true)
+        expect(textarea3.prop('helperText')).toBe('Too short')
 
         wrapper.setProps({
             childValue3: 'Kuala Lumpur'
         })
 
-        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBeUndefined()
+        textarea3 = wrapper.find(Textarea).at(3)
+
+        expect(textarea3.prop('error')).toBeUndefined()
+        expect(textarea3.prop('helperText')).toBeUndefined()
 
         expect(validate('groupA')).toBe(true)
         expect(validate('groupB')).toBe(true)
@@ -180,10 +252,22 @@ describe('core', () => {
 
         wrapper.update()
 
-        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBeUndefined()
+        textarea0 = wrapper.find(Textarea).at(0)
+        textarea1 = wrapper.find(Textarea).at(1)
+        textarea2 = wrapper.find(Textarea).at(2)
+        textarea3 = wrapper.find(Textarea).at(3)
+
+        expect(textarea0.prop('error')).toBeUndefined()
+        expect(textarea0.prop('helperText')).toBeUndefined()
+
+        expect(textarea1.prop('error')).toBeUndefined()
+        expect(textarea1.prop('helperText')).toBeUndefined()
+
+        expect(textarea2.prop('error')).toBeUndefined()
+        expect(textarea2.prop('helperText')).toBeUndefined()
+
+        expect(textarea3.prop('error')).toBeUndefined()
+        expect(textarea3.prop('helperText')).toBeUndefined()
     })
 
     it('should silently validate groups', () => {
@@ -216,20 +300,44 @@ describe('core', () => {
             />
         )
 
-        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBeUndefined()
+        let textarea0 = wrapper.find(Textarea).at(0)
+        let textarea1 = wrapper.find(Textarea).at(1)
+        let textarea2 = wrapper.find(Textarea).at(2)
+        let textarea3 = wrapper.find(Textarea).at(3)
+
+        expect(textarea0.prop('error')).toBeUndefined()
+        expect(textarea0.prop('helperText')).toBeUndefined()
+
+        expect(textarea1.prop('error')).toBeUndefined()
+        expect(textarea1.prop('helperText')).toBeUndefined()
+
+        expect(textarea2.prop('error')).toBeUndefined()
+        expect(textarea2.prop('helperText')).toBeUndefined()
+
+        expect(textarea3.prop('error')).toBeUndefined()
+        expect(textarea3.prop('helperText')).toBeUndefined()
 
         expect(validate('groupA', true)).toBe(false)
         expect(validate('groupB', true)).toBe(false)
 
         wrapper.update()
 
-        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBeUndefined()
+        textarea0 = wrapper.find(Textarea).at(0)
+        textarea1 = wrapper.find(Textarea).at(1)
+        textarea2 = wrapper.find(Textarea).at(2)
+        textarea3 = wrapper.find(Textarea).at(3)
+
+        expect(textarea0.prop('error')).toBeUndefined()
+        expect(textarea0.prop('helperText')).toBeUndefined()
+
+        expect(textarea1.prop('error')).toBeUndefined()
+        expect(textarea1.prop('helperText')).toBeUndefined()
+
+        expect(textarea2.prop('error')).toBeUndefined()
+        expect(textarea2.prop('helperText')).toBeUndefined()
+
+        expect(textarea3.prop('error')).toBeUndefined()
+        expect(textarea3.prop('helperText')).toBeUndefined()
 
         wrapper.setProps({
             value0: 'Rabat',
@@ -238,84 +346,168 @@ describe('core', () => {
             childValue3: 'Sofia'
         })
 
-        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBe('Must finish with e')
-        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBe('Too long')
-        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBe('Only letters')
-        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBe('Must start with T')
+        textarea0 = wrapper.find(Textarea).at(0)
+        textarea1 = wrapper.find(Textarea).at(1)
+        textarea2 = wrapper.find(Textarea).at(2)
+        textarea3 = wrapper.find(Textarea).at(3)
+
+        expect(textarea0.prop('error')).toBe(true)
+        expect(textarea0.prop('helperText')).toBe('Must finish with e')
+
+        expect(textarea1.prop('error')).toBe(true)
+        expect(textarea1.prop('helperText')).toBe('Too long')
+
+        expect(textarea2.prop('error')).toBe(true)
+        expect(textarea2.prop('helperText')).toBe('Only letters')
+
+        expect(textarea3.prop('error')).toBe(true)
+        expect(textarea3.prop('helperText')).toBe('Must start with T')
 
         expect(validate('groupA', true)).toBe(false)
         expect(validate('groupB', true)).toBe(false)
 
         wrapper.update()
 
-        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBe('Must finish with e')
-        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBe('Too long')
-        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBe('Only letters')
-        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBe('Must start with T')
+        textarea0 = wrapper.find(Textarea).at(0)
+        textarea1 = wrapper.find(Textarea).at(1)
+        textarea2 = wrapper.find(Textarea).at(2)
+        textarea3 = wrapper.find(Textarea).at(3)
+
+        expect(textarea0.prop('error')).toBe(true)
+        expect(textarea0.prop('helperText')).toBe('Must finish with e')
+
+        expect(textarea1.prop('error')).toBe(true)
+        expect(textarea1.prop('helperText')).toBe('Too long')
+
+        expect(textarea2.prop('error')).toBe(true)
+        expect(textarea2.prop('helperText')).toBe('Only letters')
+
+        expect(textarea3.prop('error')).toBe(true)
+        expect(textarea3.prop('helperText')).toBe('Must start with T')
 
         wrapper.setProps({
             value0: 'Belgrade'
         })
 
-        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBeUndefined()
+        textarea0 = wrapper.find(Textarea).at(0)
+
+        expect(textarea0.prop('error')).toBeUndefined()
+        expect(textarea0.prop('helperText')).toBeUndefined()
 
         expect(validate('groupA', true)).toBe(false)
         expect(validate('groupB', true)).toBe(false)
 
         wrapper.update()
 
-        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBe('Too long')
-        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBe('Only letters')
-        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBe('Must start with T')
+        textarea0 = wrapper.find(Textarea).at(0)
+        textarea1 = wrapper.find(Textarea).at(1)
+        textarea2 = wrapper.find(Textarea).at(2)
+        textarea3 = wrapper.find(Textarea).at(3)
+
+        expect(textarea0.prop('error')).toBeUndefined()
+        expect(textarea0.prop('helperText')).toBeUndefined()
+
+        expect(textarea1.prop('error')).toBe(true)
+        expect(textarea1.prop('helperText')).toBe('Too long')
+
+        expect(textarea2.prop('error')).toBe(true)
+        expect(textarea2.prop('helperText')).toBe('Only letters')
+
+        expect(textarea3.prop('error')).toBe(true)
+        expect(textarea3.prop('helperText')).toBe('Must start with T')
 
         wrapper.setProps({
             childValue1: 'Bern'
         })
 
-        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBeUndefined()
+        textarea1 = wrapper.find(Textarea).at(1)
+
+        expect(textarea1.prop('error')).toBeUndefined()
+        expect(textarea1.prop('helperText')).toBeUndefined()
 
         expect(validate('groupA', true)).toBe(false)
         expect(validate('groupB', true)).toBe(false)
 
         wrapper.update()
 
-        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBe('Only letters')
-        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBe('Must start with T')
+        textarea0 = wrapper.find(Textarea).at(0)
+        textarea1 = wrapper.find(Textarea).at(1)
+        textarea2 = wrapper.find(Textarea).at(2)
+        textarea3 = wrapper.find(Textarea).at(3)
+
+        expect(textarea0.prop('error')).toBeUndefined()
+        expect(textarea0.prop('helperText')).toBeUndefined()
+
+        expect(textarea1.prop('error')).toBeUndefined()
+        expect(textarea1.prop('helperText')).toBeUndefined()
+
+        expect(textarea2.prop('error')).toBe(true)
+        expect(textarea2.prop('helperText')).toBe('Only letters')
+
+        expect(textarea3.prop('error')).toBe(true)
+        expect(textarea3.prop('helperText')).toBe('Must start with T')
 
         wrapper.setProps({
             value2: 'Bamako'
         })
 
-        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBeUndefined()
+        textarea2 = wrapper.find(Textarea).at(2)
+
+        expect(textarea2.prop('error')).toBeUndefined()
+        expect(textarea2.prop('helperText')).toBeUndefined()
 
         expect(validate('groupA', true)).toBe(false)
         expect(validate('groupB', true)).toBe(true)
 
         wrapper.update()
 
-        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBe('Must start with T')
+        textarea0 = wrapper.find(Textarea).at(0)
+        textarea1 = wrapper.find(Textarea).at(1)
+        textarea2 = wrapper.find(Textarea).at(2)
+        textarea3 = wrapper.find(Textarea).at(3)
+
+        expect(textarea0.prop('error')).toBeUndefined()
+        expect(textarea0.prop('helperText')).toBeUndefined()
+
+        expect(textarea1.prop('error')).toBeUndefined()
+        expect(textarea1.prop('helperText')).toBeUndefined()
+
+        expect(textarea2.prop('error')).toBeUndefined()
+        expect(textarea2.prop('helperText')).toBeUndefined()
+
+        expect(textarea3.prop('error')).toBe(true)
+        expect(textarea3.prop('helperText')).toBe('Must start with T')
 
         wrapper.setProps({
             childValue3: 'Tallinn'
         })
 
-        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBeUndefined()
+        textarea3 = wrapper.find(Textarea).at(3)
+
+        expect(textarea3.prop('error')).toBeUndefined()
+        expect(textarea3.prop('helperText')).toBeUndefined()
 
         expect(validate('groupA', true)).toBe(true)
         expect(validate('groupB', true)).toBe(true)
 
         wrapper.update()
 
-        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBeUndefined()
-        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBeUndefined()
+        textarea0 = wrapper.find(Textarea).at(0)
+        textarea1 = wrapper.find(Textarea).at(1)
+        textarea2 = wrapper.find(Textarea).at(2)
+        textarea3 = wrapper.find(Textarea).at(3)
+
+        expect(textarea0.prop('error')).toBeUndefined()
+        expect(textarea0.prop('helperText')).toBeUndefined()
+
+        expect(textarea1.prop('error')).toBeUndefined()
+        expect(textarea1.prop('helperText')).toBeUndefined()
+
+        expect(textarea2.prop('error')).toBeUndefined()
+        expect(textarea2.prop('helperText')).toBeUndefined()
+
+        expect(textarea3.prop('error')).toBeUndefined()
+        expect(textarea3.prop('helperText')).toBeUndefined()
     })
 
     it('should update groups on the fly', () => {

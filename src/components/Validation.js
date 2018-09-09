@@ -18,12 +18,12 @@ export default class Validation extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextValue, value) {
-        const { children, error } = nextProps
+        const { children, error, helper } = nextProps
 
         if (nextValue !== value)
             this.validate(false, nextProps)
         else if (!shallowequal(children.props, this.props.children.props))
-            this.renderChild(children, error, this.hint)
+            this.renderChild(children, error, helper, this.hint)
     }
 
     componentWillUnmount() {
@@ -31,11 +31,11 @@ export default class Validation extends Component {
     }
 
     validate(mute, props, value) {
-        const { children, validators, error } = props
+        const { children, error, helper, validators } = props
 
         for (const { rule, hint } of validators)
             if (!rule(value)) {
-                this.renderChild(children, error, mute ? this.hint : hint)
+                this.renderChild(children, error, helper, mute ? this.hint : hint)
                 return false
             }
 
@@ -43,10 +43,11 @@ export default class Validation extends Component {
         return true
     }
 
-    renderChild(child, error, hint) {
+    renderChild(child, error, helper, hint) {
         this.setState({
             child: hint === undefined ? child : cloneElement(child, {
-                [error]: hint
+                [error]: true,
+                [helper]: hint
             })
         })
 
@@ -59,13 +60,15 @@ export default class Validation extends Component {
 }
 
 Validation.defaultProps = {
-    error: 'errorText'
+    error: 'error',
+    helper: 'helperText'
 }
 
 Validation.propTypes = {
     children: PropTypes.element.isRequired,
     error: PropTypes.string.isRequired,
     groups: PropTypes.array.isRequired,
+    helper: PropTypes.string.isRequired,
     validators: PropTypes.arrayOf(PropTypes.shape({
         rule: PropTypes.func.isRequired
     })).isRequired

@@ -3,23 +3,20 @@
 [![npm version](https://badge.fury.io/js/react-easy-validation.svg)](https://www.npmjs.com/package/react-easy-validation)
 [![build status](https://travis-ci.org/mattp94/react-easy-validation.svg?branch=master)](https://travis-ci.org/mattp94/react-easy-validation)
 [![coverage status](https://coveralls.io/repos/github/mattp94/react-easy-validation/badge.svg?branch=master)](https://coveralls.io/github/mattp94/react-easy-validation?branch=master)
-[![peerDependencies status](https://david-dm.org/mattp94/react-easy-validation/peer-status.svg)](https://david-dm.org/mattp94/react-easy-validation?type=peer)
-[![dependencies status](https://david-dm.org/mattp94/react-easy-validation/status.svg)](https://david-dm.org/mattp94/react-easy-validation)
-[![devDependencies status](https://david-dm.org/mattp94/react-easy-validation/dev-status.svg)](https://david-dm.org/mattp94/react-easy-validation?type=dev)
 
 > This library gives an **easy** way to **validate forms** in [React](https://facebook.github.io/react) by using a **wrapper** on your components.
 
 ## Features
 
 - Simple usage by **wrapping** components you want to validate.
-- Supports components which **handle** an **error prop** whatever prop name.
+- Supports components which **manage errors** from props.
 - Supports validation of a **set** of **components** by associating **groups** with these components.
-- Can **observe** a **value prop** of your component whatever prop name as well as a value **outside** it.
+- Can **observe** a **value prop** of your component as well as a value **outside** it.
 - May be used with **libraries** like [Material-UI](http://www.material-ui.com) or [React Toolbox](http://react-toolbox.io).
 
 ## Demo
 
-Check out a [complete example](https://codesandbox.io/embed/43o0m77nw4) with **Material-UI**.
+Check out a [complete example](https://codesandbox.io/embed/2jx75m2qnr) with **Material-UI**.
 
 ## Installation
 
@@ -38,16 +35,17 @@ Two wrappers are provided to cover specific cases of validation:
 - `<ValidationIn />`
 - `<ValidationOut />`
 
-Any wrapper takes an array of validators and an array of groups. It listens to a value and checks it with every validator. If some of them doesn't match with value, it passes an error to component.
+Any wrapper takes an array of validators and an array of groups. It listens to a value and checks it with every validator. If some of them doesn't match with value, an error flag and an error message are passed to the component.
 
 On the other side, a method `validate` allows you to validate a set of components by checking a given group. It returns the validation result at the same time.
 
-Now, consider the following component `Input` which can display an error from its props:
+Now, consider the following component `Input`:
 
 ```js
-const Input = ({ err, val, onChange }) => (
+const Input = ({ err, msg, val, ...rest }) => (
     <div>
-        <input onChange={onChange} value={val} /> {err}
+        <input {...rest} value={val} />
+        {err && <span>{msg}</span>}
     </div>
 )
 ```
@@ -64,6 +62,7 @@ Use this wrapper if your validation depends on a value inside the component you 
 <ValidationIn
     error="err"
     groups={['form']}
+    helper="msg"
     validators={[{
         rule: value => value,
         hint: 'Required'
@@ -83,9 +82,10 @@ All of these can be changed on the fly:
 | Name | Type | Default | Required | Description |
 | ---- | ---- | ------- | :------: | ----------- |
 | `children` | `element` | | ✓ | Component you want to validate. |
-| `error` | `string` | `errorText` | | Name of the component's prop which receives errors. |
+| `error` | `string` | `error` | | Name of the component's prop which receives error flags. |
 | `groups` | `array` | | ✓ | Groups you want to associate with your component. Any type is allowed because a group is used like a key. |
-| `validators` | `array` | | ✓ | Validators whose order is important. Each validator is an `object` like `{ rule: func, hint: any }`. Here, `rule` takes a `value` as parameter and returns a result. If it's falsy, then `hint` is passed to the component. |
+| `helper` | `string` | `helperText` | | Name of the component's prop which receives error messages. |
+| `validators` | `array` | | ✓ | Validators whose order is important. Each validator is an `object` like `{ rule: func, hint: any }`. Here, `rule` takes a `value` as parameter and returns a result. If it's falsy, then `hint` is passed to the component as well as a flag containing `true`. |
 | `value` | `string` | `value` | | Name of the component's prop which is validated. |
 
 > **Note:** A library like [validator.js](https://github.com/chriso/validator.js) can easily be used in your validators' rules.
@@ -100,6 +100,7 @@ In a case where your validation depends on a value outside your component, use t
 <ValidationOut
     error="err"
     groups={['form']}
+    helper="msg"
     validators={[{
         rule: value => value.length > 4,
         hint: 'Must be longer'
@@ -144,7 +145,7 @@ const result = validate(group[, mute])
 
 ## Example
 
-Here is a [basic example](https://codesandbox.io/embed/oq176zv629) with `<ValidationIn />`:
+Here is a [basic example](https://codesandbox.io/embed/mm3pm4p7y) with `<ValidationIn />`:
 
 ```js
 import React, { Component } from 'react'
@@ -156,24 +157,18 @@ class Example extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-            value: ''
-        }
-
+        this.state = { value: '' }
         this.handleChange = this.handleChange.bind(this)
     }
 
     handleChange({ target: { value } }) {
-        this.setState({
-            value
-        })
+        this.setState({ value })
     }
 
     handleSubmit(event) {
         event.preventDefault()
 
-        if (validate('form'))
-            alert('Form is valid')
+        validate('form') && alert('Success')
     }
 
     render() {
@@ -182,6 +177,7 @@ class Example extends Component {
                 <ValidationIn
                     error="err"
                     groups={['form']}
+                    helper="msg"
                     validators={[{
                         rule: value => value,
                         hint: 'Required'
@@ -195,10 +191,7 @@ class Example extends Component {
                         val={this.state.value}
                     />
                 </ValidationIn>
-
-                <button type="submit">
-                    Validate
-                </button>
+                <input type="submit" />
             </form>
         )
     }

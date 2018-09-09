@@ -22,7 +22,8 @@ describe('<ValidationIn />', () => {
 
         const validationIn = wrapper.find(ValidationIn)
 
-        expect(validationIn.prop('error')).toBe('errorText')
+        expect(validationIn.prop('error')).toBe('error')
+        expect(validationIn.prop('helper')).toBe('helperText')
         expect(validationIn.prop('value')).toBe('value')
     })
 
@@ -49,20 +50,29 @@ describe('<ValidationIn />', () => {
             />
         )
 
-        expect(wrapper.find(Select).prop('errorText')).toBeUndefined()
+        let select = wrapper.find(Select)
+
+        expect(select.prop('error')).toBeUndefined()
+        expect(select.prop('helperText')).toBeUndefined()
 
         wrapper.setProps({
             childValue: 'Madrid'
         })
 
-        expect(wrapper.find(Select).prop('errorText')).toBeUndefined()
+        select = wrapper.find(Select)
+
+        expect(select.prop('error')).toBeUndefined()
+        expect(select.prop('helperText')).toBeUndefined()
 
         wrapper.setProps({
             childValue: 'Brussels',
             value: 'val'
         })
 
-        expect(wrapper.find(Select).prop('errorText')).toBe('Only numbers')
+        select = wrapper.find(Select)
+
+        expect(select.prop('error')).toBe(true)
+        expect(select.prop('helperText')).toBe('Only numbers')
     })
 
     it('should validate nothing as there is no validator', () => {
@@ -75,16 +85,22 @@ describe('<ValidationIn />', () => {
             />
         )
 
-        expect(wrapper.find(Select).prop('errorText')).toBeUndefined()
+        let select = wrapper.find(Select)
+
+        expect(select.prop('error')).toBeUndefined()
+        expect(select.prop('helperText')).toBeUndefined()
 
         wrapper.setProps({
             childValue: ''
         })
 
-        expect(wrapper.find(Select).prop('errorText')).toBeUndefined()
+        select = wrapper.find(Select)
+
+        expect(select.prop('error')).toBeUndefined()
+        expect(select.prop('helperText')).toBeUndefined()
     })
 
-    it('should pass props to child as well as an error prop', () => {
+    it('should pass props to child as well as error / helperText props', () => {
         const wrapper = mount(
             <ValidationInWrapper
                 childValue="Seoul"
@@ -100,7 +116,8 @@ describe('<ValidationIn />', () => {
         let select = wrapper.find(Select)
 
         expect(select.prop('name')).toBeUndefined()
-        expect(select.prop('errorText')).toBeUndefined()
+        expect(select.prop('error')).toBeUndefined()
+        expect(select.prop('helperText')).toBeUndefined()
 
         wrapper.setProps({
             childValue: '',
@@ -110,7 +127,8 @@ describe('<ValidationIn />', () => {
         select = wrapper.find(Select)
 
         expect(select.prop('name')).toBe('city')
-        expect(select.prop('errorText')).toBe('Required')
+        expect(select.prop('error')).toBe(true)
+        expect(select.prop('helperText')).toBe('Required')
 
         wrapper.setProps({
             childValue: ''
@@ -119,7 +137,8 @@ describe('<ValidationIn />', () => {
         select = wrapper.find(Select)
 
         expect(select.prop('name')).toBe('city')
-        expect(select.prop('errorText')).toBe('Required')
+        expect(select.prop('error')).toBe(true)
+        expect(select.prop('helperText')).toBe('Required')
 
         wrapper.setProps({
             name: 'town'
@@ -128,7 +147,8 @@ describe('<ValidationIn />', () => {
         select = wrapper.find(Select)
 
         expect(select.prop('name')).toBe('town')
-        expect(select.prop('errorText')).toBe('Required')
+        expect(select.prop('error')).toBe(true)
+        expect(select.prop('helperText')).toBe('Required')
 
         wrapper.setProps({
             childValue: 'Lisbon'
@@ -137,15 +157,17 @@ describe('<ValidationIn />', () => {
         select = wrapper.find(Select)
 
         expect(select.prop('name')).toBe('town')
-        expect(select.prop('errorText')).toBeUndefined()
+        expect(select.prop('error')).toBeUndefined()
+        expect(select.prop('helperText')).toBeUndefined()
     })
 
-    it('should test several validators with err as error prop', () => {
+    it('should test several validators with err / msg as error / helper props', () => {
         const wrapper = mount(
             <ValidationInWrapper
                 childValue="Taipei"
                 error="err"
                 groups={[]}
+                helper="msg"
                 validators={[{
                     rule: value => value.length > 8,
                     hint: 'Too short'
@@ -157,28 +179,40 @@ describe('<ValidationIn />', () => {
             />
         )
 
-        expect(wrapper.find(Select).prop('err')).toBeUndefined()
+        let select = wrapper.find(Select)
+
+        expect(select.prop('err')).toBeUndefined()
+        expect(select.prop('msg')).toBeUndefined()
 
         wrapper.setProps({
             childValue: 'Helsinki'
         })
 
-        expect(wrapper.find(Select).prop('err')).toBe('Too short')
+        select = wrapper.find(Select)
+
+        expect(select.prop('err')).toBe(true)
+        expect(select.prop('msg')).toBe('Too short')
 
         wrapper.setProps({
             childValue: 'Stockholm'
         })
 
-        expect(wrapper.find(Select).prop('err')).toBe('Only uppercase')
+        select = wrapper.find(Select)
+
+        expect(select.prop('err')).toBe(true)
+        expect(select.prop('msg')).toBe('Only uppercase')
 
         wrapper.setProps({
             childValue: 'STOCKHOLM'
         })
 
-        expect(wrapper.find(Select).prop('err')).toBeUndefined()
+        select = wrapper.find(Select)
+
+        expect(select.prop('err')).toBeUndefined()
+        expect(select.prop('msg')).toBeUndefined()
     })
 
-    it('should update validators and error props on the fly', () => {
+    it('should update validators, error and helper props on the fly', () => {
         const wrapper = mount(
             <ValidationInWrapper
                 childValue=""
@@ -191,23 +225,33 @@ describe('<ValidationIn />', () => {
             />
         )
 
-        expect(wrapper.find(Select).prop('errorText')).toBeUndefined()
+        let select = wrapper.find(Select)
+
+        expect(select.prop('error')).toBeUndefined()
+        expect(select.prop('helperText')).toBeUndefined()
 
         wrapper.setProps({
             childValue: 'Buenos Aires'
         })
 
-        expect(wrapper.find(Select).prop('errorText')).toBe('Too long')
+        select = wrapper.find(Select)
+
+        expect(select.prop('error')).toBe(true)
+        expect(select.prop('helperText')).toBe('Too long')
 
         wrapper.setProps({
-            error: 'err',
             childValue: 'Riga',
+            error: 'err',
+            helper: 'msg',
             validators: [{
                 rule: value => value.length > 4,
                 hint: 'Too short'
             }]
         })
 
-        expect(wrapper.find(Select).prop('err')).toBe('Too short')
+        select = wrapper.find(Select)
+
+        expect(select.prop('err')).toBe(true)
+        expect(select.prop('msg')).toBe('Too short')
     })
 })
