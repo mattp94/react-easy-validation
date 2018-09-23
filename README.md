@@ -141,7 +141,7 @@ const result = validate(group[, mute])
 
 ### Clear a group
 
-Use the method `clear` to remove components' errors of a group.
+Use the method `clear` to remove errors of a group's components.
 
 #### Syntax
 
@@ -157,7 +157,7 @@ clear(group)
 
 ## Example
 
-Here is a [basic example](https://codesandbox.io/embed/oq176zv629) with `<ValidationIn />`:
+Here is a [basic example](https://codesandbox.io/embed/oq176zv629?module=%2Fcomponents%2FExample.js) with `<ValidationIn />`:
 
 ```js
 import React, { Component } from 'react'
