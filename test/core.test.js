@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { mount } from 'enzyme'
 
 import ValidationIn from '../src/components/ValidationIn'
 import ValidationOut from '../src/components/ValidationOut'
-import { elements, validate } from '../src/core'
+import { clear, elements, validate } from '../src/core'
 
 const Textarea = () => <div>textarea</div>
 
 const CoreWrapper = props => (
-    <div>
+    <Fragment>
         <ValidationOut
             groups={props.groups0}
             validators={props.validators0}
@@ -31,7 +31,7 @@ const CoreWrapper = props => (
             validators={props.validators3}>
             <Textarea value={props.childValue3} />
         </ValidationIn>
-    </div>
+    </Fragment>
 )
 
 describe('core', () => {
@@ -367,7 +367,7 @@ describe('core', () => {
     })
 
     it('should not validate anything because nothing uses groupZ', () => {
-        const wrapper = mount(
+        mount(
             <CoreWrapper
                 groups0={['groupC']}
                 groups1={['groupA']}
@@ -397,5 +397,69 @@ describe('core', () => {
         )
 
         expect(validate('groupZ')).toBe(true)
+    })
+
+    it('should clear groups', () => {
+        const wrapper = mount(
+            <CoreWrapper
+                groups0={['groupA']}
+                groups1={['groupB']}
+                groups2={['groupA']}
+                groups3={['groupB']}
+                validators0={[{
+                    rule: value => value.length < 4,
+                    hint: 'Too long'
+                }]}
+                validators1={[{
+                    rule: value => value.startsWith('K'),
+                    hint: 'Must start with K'
+                }]}
+                validators2={[{
+                    rule: value => /^\d+$/.test(value),
+                    hint: 'Only numbers'
+                }]}
+                validators3={[{
+                    rule: value => value,
+                    hint: 'Required'
+                }]}
+                value0="Vientiane"
+                childValue1="Beirut"
+                value2="Havana"
+                childValue3=""
+            />
+        )
+
+        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBeUndefined()
+        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBeUndefined()
+        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBeUndefined()
+        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBeUndefined()
+
+        validate('groupA')
+        validate('groupB')
+
+        wrapper.update()
+
+        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBe('Too long')
+        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBe('Must start with K')
+        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBe('Only numbers')
+        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBe('Required')
+
+        clear('groupA')
+
+        wrapper.update()
+
+        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBeUndefined()
+        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBe('Must start with K')
+        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBeUndefined()
+        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBe('Required')
+
+        clear('groupB')
+
+        wrapper.update()
+
+        expect(wrapper.find(Textarea).at(0).prop('errorText')).toBeUndefined()
+        expect(wrapper.find(Textarea).at(1).prop('errorText')).toBeUndefined()
+        expect(wrapper.find(Textarea).at(2).prop('errorText')).toBeUndefined()
+        expect(wrapper.find(Textarea).at(3).prop('errorText')).toBeUndefined()
     })
 })

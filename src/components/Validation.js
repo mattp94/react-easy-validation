@@ -43,6 +43,10 @@ export default class Validation extends Component {
         return true
     }
 
+    clear() {
+        this.renderChild(this.props.children)
+    }
+
     renderChild(child, error, hint) {
         this.setState({
             child: hint === undefined ? child : cloneElement(child, {
