@@ -16,7 +16,7 @@
 
 ## Demo
 
-Check out a [complete example](https://codesandbox.io/embed/2jx75m2qnr) with **Material-UI**.
+Let's see a [complete example](https://2jx75m2qnr.codesandbox.io) ([source](https://codesandbox.io/embed/2jx75m2qnr?module=%2Fcomponents%2FForm%2Findex.js)) with **Material-UI**.
 
 ## Installation
 
@@ -42,9 +42,9 @@ On the other side, a method `validate` allows you to validate a set of component
 Now, consider the following component `Input`:
 
 ```js
-const Input = ({ err, msg, val, ...rest }) => (
+const Input = ({ err, msg, val, ...other }) => (
     <div>
-        <input {...rest} value={val} />
+        <input {...other} value={val} />
         {err && <span>{msg}</span>}
     </div>
 )
@@ -79,14 +79,14 @@ Use this wrapper if your validation depends on a value inside the component you 
 
 All of these can be changed on the fly:
 
-| Name | Type | Default | Required | Description |
-| ---- | ---- | ------- | :------: | ----------- |
-| `children` | `element` | | ✓ | Component you want to validate. |
-| `error` | `string` | `error` | | Name of the component's prop which receives error flags. |
-| `groups` | `array` | | ✓ | Groups you want to associate with your component. Any type is allowed because a group is used like a key. |
-| `helper` | `string` | `helperText` | | Name of the component's prop which receives error messages. |
-| `validators` | `array` | | ✓ | Validators whose order is important. Each validator is an `object` like `{ rule: func, hint: any }`. Here, `rule` takes a `value` as parameter and returns a result. If it's falsy, then `hint` is passed to the component as well as a flag containing `true`. |
-| `value` | `string` | `value` | | Name of the component's prop which is validated. |
+| Name         | Type      | Default      | Required | Description |
+| ------------ | --------- | ------------ | :------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `children`   | `element` |              | ✓        | Component you want to validate.                                                                                                                                                                                                                                 |
+| `error`      | `string`  | `error`      |          | Name of the component's prop which receives error flags.                                                                                                                                                                                                        |
+| `groups`     | `array`   |              | ✓        | Groups you want to associate with your component. Any type is allowed because a group is used like a key.                                                                                                                                                       |
+| `helper`     | `string`  | `helperText` |          | Name of the component's prop which receives error messages.                                                                                                                                                                                                     |
+| `validators` | `array`   |              | ✓        | Validators whose order is important. Each validator is an `object` like `{ rule: func, hint: any }`. Here, `rule` takes a `value` as parameter and returns a result. If it's falsy, then `hint` is passed to the component as well as a flag containing `true`. |
+| `value`      | `string`  | `value`      |          | Name of the component's prop which is validated.                                                                                                                                                                                                                |
 
 > **Note:** A library like [validator.js](https://github.com/chriso/validator.js) can easily be used in your validators' rules.
 
@@ -117,9 +117,9 @@ In a case where your validation depends on a value outside your component, use t
 
 It has exactly the same props than previous wrapper, except for:
 
-| Name | Type | Default | Required | Description |
-| ---- | ---- | ------- | :------: | ----------- |
-| `value` | `any` | | | Value which is validated. |
+| Name    | Type  | Default | Required | Description               |
+| ------- | ----- | ------- | :------: | ------------------------- |
+| `value` | `any` |         |          | Value which is validated. |
 
 ### Validate a group
 
@@ -133,19 +133,35 @@ const result = validate(group[, mute])
 
 #### Parameters
 
-| Name | Type | Default | Optional | Description |
-| ---- | ---- | ------- | :------: | ----------- |
-| `group` | `any` | | | Group you want to validate. |
-| `mute` | `boolean` | `false` | ✓ | Flag which enables to silently validate a group. |
+| Name    | Type      | Default | Optional | Description                                      |
+| ------- | --------- | ------- | :------: | ------------------------------------------------ |
+| `group` | `any`     |         |          | Group you want to validate.                      |
+| `mute`  | `boolean` | `false` | ✓        | Flag which enables to silently validate a group. |
 
 #### Return value
 
 + **Type:** `boolean`
 + **Description:** Result of the validation.
 
+### Clear a group
+
+Use the method `clear` to remove flags and messages of a group's components.
+
+#### Syntax
+
+```js
+clear(group)
+```
+
+#### Parameters
+
+| Name    | Type  | Default | Optional | Description              |
+| ------- | ----- | ------- | :------: | ------------------------ |
+| `group` | `any` |         |          | Group you want to clear. |
+
 ## Example
 
-Here is a [basic example](https://codesandbox.io/embed/mm3pm4p7y) with `<ValidationIn />`:
+Here is a [basic example](https://codesandbox.io/embed/mm3pm4p7y?module=%2Fcomponents%2FExample.js) with `<ValidationIn />`:
 
 ```js
 import React, { Component } from 'react'
@@ -154,45 +170,41 @@ import { validate, ValidationIn } from 'react-easy-validation'
 import Input from './Input'
 
 class Example extends Component {
-    constructor(props) {
-        super(props)
+    state = { value: '' }
 
-        this.state = { value: '' }
-        this.handleChange = this.handleChange.bind(this)
+    handleChange = event => {
+        this.setState({ value: event.target.value })
     }
 
-    handleChange({ target: { value } }) {
-        this.setState({ value })
-    }
-
-    handleSubmit(event) {
-        event.preventDefault()
-
+    handleClick = () => {
         validate('form') && alert('Success')
     }
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <div>
                 <ValidationIn
                     error="err"
-                    groups={['form']}
+                    groups={["form"]}
                     helper="msg"
-                    validators={[{
-                        rule: value => value,
-                        hint: 'Required'
-                    }, {
-                        rule: value => value.startsWith('P'),
-                        hint: 'Must start with P'
-                    }]}
+                    validators={[
+                        {
+                            rule: value => value,
+                            hint: 'Required'
+                        },
+                        {
+                            rule: value => /^\d+$/.test(value),
+                            hint: 'Only numbers'
+                        }
+                    ]}
                     value="val">
                     <Input
                         onChange={this.handleChange}
                         val={this.state.value}
                     />
                 </ValidationIn>
-                <input type="submit" />
-            </form>
+                <button onClick={this.handleClick}>Validate</button>
+            </div>
         )
     }
 }
