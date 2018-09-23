@@ -9,3 +9,9 @@ export const validate = (group, mute = false) => {
 
     return result
 }
+
+export const clear = group => {
+    for (const element of elements)
+        if (element.props.groups.includes(group))
+            element.clear()
+}

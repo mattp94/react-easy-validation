@@ -5,9 +5,9 @@ import ValidationOut from '../../src/components/ValidationOut'
 
 const Input = () => <div>input</div>
 
-const ValidationOutWrapper = props => (
-    <ValidationOut {...props}>
-        <Input disabled={props.disabled} />
+const ValidationOutWrapper = ({ disabled, ...other }) => (
+    <ValidationOut {...other}>
+        <Input disabled={disabled} />
     </ValidationOut>
 )
 

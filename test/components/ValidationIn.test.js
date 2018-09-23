@@ -5,9 +5,9 @@ import ValidationIn from '../../src/components/ValidationIn'
 
 const Select = () => <div>select</div>
 
-const ValidationInWrapper = props => (
-    <ValidationIn {...props}>
-        <Select name={props.name} val={props.childValue} />
+const ValidationInWrapper = ({ name, childValue, ...other }) => (
+    <ValidationIn {...other}>
+        <Select name={name} val={childValue} />
     </ValidationIn>
 )
 
