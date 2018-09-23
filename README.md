@@ -185,25 +185,24 @@ class Example extends Component {
             <div>
                 <ValidationIn
                     error="err"
-                    groups={["form"]}
+                    groups={['form']}
                     helper="msg"
-                    validators={[
-                        {
-                            rule: value => value,
-                            hint: 'Required'
-                        },
-                        {
-                            rule: value => /^\d+$/.test(value),
-                            hint: 'Only numbers'
-                        }
-                    ]}
+                    validators={[{
+                        rule: value => value,
+                        hint: 'Required'
+                    }, {
+                        rule: value => /^\d+$/.test(value),
+                        hint: 'Only numbers'
+                    }]}
                     value="val">
                     <Input
                         onChange={this.handleChange}
                         val={this.state.value}
                     />
                 </ValidationIn>
-                <button onClick={this.handleClick}>Validate</button>
+                <button onClick={this.handleClick}>
+                    Validate
+                </button>
             </div>
         )
     }
