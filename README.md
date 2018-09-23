@@ -1,11 +1,8 @@
 # react-easy-validation
 
 [![npm version](https://badge.fury.io/js/react-easy-validation.svg)](https://www.npmjs.com/package/react-easy-validation)
-[![build status](https://travis-ci.org/mattp94/react-easy-validation.svg?branch=master)](https://travis-ci.org/mattp94/react-easy-validation)
-[![coverage status](https://coveralls.io/repos/github/mattp94/react-easy-validation/badge.svg?branch=master)](https://coveralls.io/github/mattp94/react-easy-validation?branch=master)
-[![peerDependencies status](https://david-dm.org/mattp94/react-easy-validation/peer-status.svg)](https://david-dm.org/mattp94/react-easy-validation?type=peer)
-[![dependencies status](https://david-dm.org/mattp94/react-easy-validation/status.svg)](https://david-dm.org/mattp94/react-easy-validation)
-[![devDependencies status](https://david-dm.org/mattp94/react-easy-validation/dev-status.svg)](https://david-dm.org/mattp94/react-easy-validation?type=dev)
+[![build status](https://travis-ci.org/mattp94/react-easy-validation.svg?branch=v1)](https://travis-ci.org/mattp94/react-easy-validation?branch=v1)
+[![coverage status](https://coveralls.io/repos/github/mattp94/react-easy-validation/badge.svg?branch=v1)](https://coveralls.io/github/mattp94/react-easy-validation?branch=v1)
 
 > This library gives an **easy** way to **validate forms** in [React](https://facebook.github.io/react) by using a **wrapper** on your components.
 
@@ -15,11 +12,11 @@
 - Supports components which **handle** an **error prop** whatever prop name.
 - Supports validation of a **set** of **components** by associating **groups** with these components.
 - Can **observe** a **value prop** of your component whatever prop name as well as a value **outside** it.
-- May be used with **libraries** like [Material-UI](http://www.material-ui.com) or [React Toolbox](http://react-toolbox.io).
+- May be used with **libraries** like [Material-UI](https://v0.material-ui.com) or [React Toolbox](http://react-toolbox.io).
 
 ## Demo
 
-Check out a [complete example](https://codesandbox.io/embed/43o0m77nw4) with **Material-UI**.
+Let's see a [complete example](https://43o0m77nw4.codesandbox.io) ([source](https://codesandbox.io/embed/43o0m77nw4?module=%2Fcomponents%2FForm%2Findex.js)) with **Material-UI**.
 
 ## Installation
 
@@ -45,9 +42,9 @@ On the other side, a method `validate` allows you to validate a set of component
 Now, consider the following component `Input` which can display an error from its props:
 
 ```js
-const Input = ({ err, val, onChange }) => (
+const Input = ({ err, val, ...other }) => (
     <div>
-        <input onChange={onChange} value={val} /> {err}
+        <input {...other} value={val} /> {err}
     </div>
 )
 ```
@@ -80,13 +77,13 @@ Use this wrapper if your validation depends on a value inside the component you 
 
 All of these can be changed on the fly:
 
-| Name | Type | Default | Required | Description |
-| ---- | ---- | ------- | :------: | ----------- |
-| `children` | `element` | | ✓ | Component you want to validate. |
-| `error` | `string` | `errorText` | | Name of the component's prop which receives errors. |
-| `groups` | `array` | | ✓ | Groups you want to associate with your component. Any type is allowed because a group is used like a key. |
-| `validators` | `array` | | ✓ | Validators whose order is important. Each validator is an `object` like `{ rule: func, hint: any }`. Here, `rule` takes a `value` as parameter and returns a result. If it's falsy, then `hint` is passed to the component. |
-| `value` | `string` | `value` | | Name of the component's prop which is validated. |
+| Name         | Type      | Default     | Required | Description                                                                                                                                                                                                                 |
+| ------------ | --------- | ----------- | :------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `children`   | `element` |             | ✓        | Component you want to validate.                                                                                                                                                                                             |
+| `error`      | `string`  | `errorText` |          | Name of the component's prop which receives errors.                                                                                                                                                                         |
+| `groups`     | `array`   |             | ✓        | Groups you want to associate with your component. Any type is allowed because a group is used like a key.                                                                                                                   |
+| `validators` | `array`   |             | ✓        | Validators whose order is important. Each validator is an `object` like `{ rule: func, hint: any }`. Here, `rule` takes a `value` as parameter and returns a result. If it's falsy, then `hint` is passed to the component. |
+| `value`      | `string`  | `value`     |          | Name of the component's prop which is validated.                                                                                                                                                                            |
 
 > **Note:** A library like [validator.js](https://github.com/chriso/validator.js) can easily be used in your validators' rules.
 
@@ -116,9 +113,9 @@ In a case where your validation depends on a value outside your component, use t
 
 It has exactly the same props than previous wrapper, except for:
 
-| Name | Type | Default | Required | Description |
-| ---- | ---- | ------- | :------: | ----------- |
-| `value` | `any` | | | Value which is validated. |
+| Name    | Type  | Default | Required | Description               |
+| ------- | ----- | ------- | :------: | ------------------------- |
+| `value` | `any` |         |          | Value which is validated. |
 
 ### Validate a group
 
@@ -132,15 +129,31 @@ const result = validate(group[, mute])
 
 #### Parameters
 
-| Name | Type | Default | Optional | Description |
-| ---- | ---- | ------- | :------: | ----------- |
-| `group` | `any` | | | Group you want to validate. |
-| `mute` | `boolean` | `false` | ✓ | Flag which enables to silently validate a group. |
+| Name    | Type      | Default | Optional | Description                                      |
+| ------- | --------- | ------- | :------: | ------------------------------------------------ |
+| `group` | `any`     |         |          | Group you want to validate.                      |
+| `mute`  | `boolean` | `false` | ✓        | Flag which enables to silently validate a group. |
 
 #### Return value
 
 + **Type:** `boolean`
 + **Description:** Result of the validation.
+
+### Clear a group
+
+Use the method `clear` to remove components' errors of a group.
+
+#### Syntax
+
+```js
+clear(group)
+```
+
+#### Parameters
+
+| Name    | Type  | Default | Optional | Description              |
+| ------- | ----- | ------- | :------: | ------------------------ |
+| `group` | `any` |         |          | Group you want to clear. |
 
 ## Example
 
@@ -153,32 +166,19 @@ import { validate, ValidationIn } from 'react-easy-validation'
 import Input from './Input'
 
 class Example extends Component {
-    constructor(props) {
-        super(props)
+    state = { value: '' }
 
-        this.state = {
-            value: ''
-        }
-
-        this.handleChange = this.handleChange.bind(this)
+    handleChange = event => {
+        this.setState({ value: event.target.value })
     }
 
-    handleChange({ target: { value } }) {
-        this.setState({
-            value
-        })
-    }
-
-    handleSubmit(event) {
-        event.preventDefault()
-
-        if (validate('form'))
-            alert('Form is valid')
+    handleClick = () => {
+        validate('form') && alert('Success')
     }
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <div>
                 <ValidationIn
                     error="err"
                     groups={['form']}
@@ -186,8 +186,8 @@ class Example extends Component {
                         rule: value => value,
                         hint: 'Required'
                     }, {
-                        rule: value => value.startsWith('P'),
-                        hint: 'Must start with P'
+                        rule: value => /^\d+$/.test(value),
+                        hint: 'Only numbers'
                     }]}
                     value="val">
                     <Input
@@ -195,11 +195,8 @@ class Example extends Component {
                         val={this.state.value}
                     />
                 </ValidationIn>
-
-                <button type="submit">
-                    Validate
-                </button>
-            </form>
+                <button onClick={this.handleClick}>Validate</button>
+            </div>
         )
     }
 }
